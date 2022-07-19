@@ -1,6 +1,6 @@
 import { ChangeEvent, FC, memo, useCallback, useState } from 'react';
 import { AiOutlineClose, AiOutlineCheck } from 'react-icons/ai';
-import { TodoItem } from '../../model/todo';
+import { TodoItem } from '../../../../model/todo';
 
 interface Props {
   todo: TodoItem;

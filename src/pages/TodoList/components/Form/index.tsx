@@ -1,7 +1,7 @@
 import { FC, memo } from 'react';
 import { AiOutlineCheck } from 'react-icons/ai';
 import Todo from '../Todo';
-import { TodoItem } from '../../model/todo';
+import { TodoItem } from '../../../../model/todo';
 
 interface Props {
   todos: Array<TodoItem>;

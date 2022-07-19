@@ -7,14 +7,13 @@ import {
   useCallback,
   memo,
 } from 'react';
-import Form from '../Form';
+import { useHistory, Link } from '@modern-js/runtime/router';
+import Form from './components/Form';
 import { TodoItem } from '@/model/todo';
 
-interface Props {
-  listState: string;
-}
-const TodoList: FC<Props> = memo(props => {
-  const { listState } = props;
+const TodoList: FC = memo(() => {
+  const history = useHistory();
+  const [listState, setListState] = useState('All');
   const [newTodo, setNewTodo] = useState('');
   const [todos, setTodos] = useState([
     { id: '1', content: '吃饭', state: false },
@@ -89,11 +88,16 @@ const TodoList: FC<Props> = memo(props => {
     localStorage.setItem('todos', JSON.stringify(todos));
   }, [todos]);
   let list = todos;
-  if (listState === 'Active') {
+  useEffect(() => {
+    history.listen(currentLocation => {
+      setListState(currentLocation.pathname);
+    });
+  }, [history]);
+  if (listState.includes('Active')) {
     list = todos.filter(todo => {
       return todo.state === false;
     });
-  } else if (listState === 'Completed') {
+  } else if (listState.includes('Completed')) {
     list = todos.filter(todo => {
       return todo.state === true;
     });
@@ -128,13 +132,13 @@ const TodoList: FC<Props> = memo(props => {
         </span>
         <ul>
           <li>
-            <a href="/">All</a>
+            <Link to="/">All</Link>
           </li>
           <li>
-            <a href="/Active">Active</a>
+            <Link to="/Active">Active</Link>
           </li>
           <li>
-            <a href="/Completed">Completed</a>
+            <Link to="/Completed">Completed</Link>
           </li>
         </ul>
       </footer>
